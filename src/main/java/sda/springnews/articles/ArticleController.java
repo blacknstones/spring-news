@@ -1,7 +1,9 @@
 package sda.springnews.articles;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -12,25 +14,36 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
-   /* public ArticleController() {
-        this.articleService = new ArticleService();
-    }*/
-
-    // Get a list of all articles
     @GetMapping("/articles")
-    public List<Article> getAll() {
-        return articleService.getAll();
+    public List<Article> getAll(@RequestParam(required = false) Long topicId) {
+        if (topicId == null) {
+            return articleService.getAll();
+        } else {
+            return articleService.getAllByTopicId(topicId);
+        }
+
     }
 
-    // Get an article by its id
+    // 200 or 404
     @GetMapping("/articles/{id}")
     public Article getById(@PathVariable Long id) {
-        return articleService.getById(id);
+        return articleService.getById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     // Create a new article
     @PostMapping("/articles")
-    public Article createArticle(@RequestBody Article article) {
-        return articleService.createArticle(article);
+    public Article create(@RequestBody Article article) {
+        return articleService.create(article);
+    }
+
+    @PutMapping("/articles")
+    public Article update(@RequestBody Article article) {
+        return articleService.update(article);
+    }
+
+    @DeleteMapping("/articles/{id}")
+    public void delete(@PathVariable Long id) {
+        articleService.delete(id);
     }
 }

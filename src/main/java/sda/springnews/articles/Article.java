@@ -3,24 +3,38 @@ package sda.springnews.articles;
 import net.bytebuddy.asm.Advice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sda.springnews.comments.Comment;
+import sda.springnews.topics.Topic;
 
 import javax.persistence.*;
+import java.util.List;
 
-// @Entity
+
+@Entity //indicate that this object will be stored in database
+@Table(name = "articles")
 public class Article {
-/*
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)*/
-    private long id;
+    // Indicate that this value will be automatically created by database as an identity key for the object
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String body;
+
     private String authorName;
 
+    // Manage the relationship in this class
+    @OneToMany
+    private List<Comment> comments;
 
-    protected Article() {
+    @ManyToMany
+    private List<Topic> topics;
 
-    }
+    // Default constructor
+    protected Article() { }
 
     public Article(Long id, String title, String body, String authorName) {
         this.id = id;
@@ -29,10 +43,10 @@ public class Article {
         this.authorName = authorName;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
-    public long getId() {
+    public Long getId() {
         return id;
     }
     public void setTitle(String title) {
@@ -57,5 +71,21 @@ public class Article {
 
     public String getAuthorName() {
         return authorName;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
+
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
     }
 }

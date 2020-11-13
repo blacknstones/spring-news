@@ -1,39 +1,44 @@
 package sda.springnews.articles;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArticleService {
 
-    private List<Article> articles;
-
-    public ArticleService() {
-        this.articles = new ArrayList<>();
-        articles.add(new Article(1L,"title1", "body1", "author1"));
-        articles.add(new Article(2L,"title2", "body2", "author2"));
-
-    }
+    @Autowired
+    private ArticleRepo repo;
 
     public List<Article> getAll() {
-        return this.articles;
+        return repo.findAll();
     }
 
-    public Article getById(@PathVariable Long id) {
-        for (Article a : articles) {
-            if (a.getId() == id) {
-                return a;
-            }
-        }
-        return null;
+    // Use Optional in case the id doesn't exist
+    public Optional<Article> getById(Long id) {
+        return repo.findById(id);
     }
 
-    public Article createArticle(@RequestBody Article article) {
-        articles.add(article);
-        return article;
+    // repo will check if the id exists
+    // if not, new article will be created
+    public Article create(Article article) {
+        return repo.save(article);
+    }
+    // if yes, existed article will be updated
+    public Article update(Article updatedArticle) {
+        return repo.save(updatedArticle);
+    }
+
+    public void delete(Long id) {
+        repo.deleteById(id);
+    }
+
+    public List<Article> getAllByTopicId(Long topicId) {
+        return repo.findAllByTopicId(topicId);
     }
 }
