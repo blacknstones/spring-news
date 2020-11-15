@@ -1,8 +1,5 @@
 package sda.springnews.articles;
 
-import net.bytebuddy.asm.Advice;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import sda.springnews.comments.Comment;
 import sda.springnews.topics.Topic;
 
@@ -11,7 +8,6 @@ import java.util.List;
 
 
 @Entity //indicate that this object will be stored in database
-@Table(name = "articles")
 public class Article {
 
     @Id
@@ -73,19 +69,19 @@ public class Article {
         return authorName;
     }
 
-    public void setTopics(List<Topic> topics) {
-        this.topics = topics;
-    }
-
-    public List<Topic> getTopics() {
-        return topics;
-    }
-
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 
     public List<Comment> getComments() {
         return comments;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
+
+    public List<Topic> getTopics() {
+        return topics;
     }
 }

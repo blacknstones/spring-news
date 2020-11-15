@@ -6,7 +6,6 @@ import sda.springnews.topics.Topic;
 import javax.persistence.*;
 
 @Entity //indicate that this object will be stored in database
-@Table(name = "comments")
 public class Comment {
 
     @Id
@@ -31,6 +30,9 @@ public class Comment {
         this.authorName = authorName;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
     public Long getId() {
         return id;
     }
@@ -49,6 +51,14 @@ public class Comment {
 
     public String getAuthorName() {
         return authorName;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
+    }
+
+    public Article getArticle() {
+        return article;
     }
 }
 

@@ -12,19 +12,21 @@ import java.util.List;
 
     @RestController
     public class TopicController {
-        @Autowired
+
         private TopicService topicService;
+
+        public TopicController(@Autowired TopicService topicService) {
+            this.topicService = topicService;
+        }
 
         @GetMapping("/topics")
         public List<Topic> getAll() {
             return topicService.getAll();
         }
 
-        // 200 or 404
-        @GetMapping("/topics/topicId={topicId}")
-        public Topic getById(@PathVariable Long id) {
-            return topicService.getById(id)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        @GetMapping("/topics?articleId={articleId}")
+        public List<Topic> getAllByArticleId(Long articleId) {
+            return topicService.getAllByArticleId(articleId);
         }
 
         // Create a new topic
@@ -34,8 +36,8 @@ import java.util.List;
         }
 
         @PutMapping("/topics")
-        public Topic update(@RequestBody Topic topic) {
-            return topicService.update(topic);
+        public Topic update(@RequestBody Topic updatedTopic) {
+            return topicService.update(updatedTopic);
         }
 
         @DeleteMapping("/topics/{id}")

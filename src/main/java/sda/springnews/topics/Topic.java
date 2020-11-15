@@ -16,7 +16,7 @@ public class Topic {
     @ManyToMany(mappedBy = "topics")
     private List<Article> articles;
 
-    protected Topic() { }
+    public Topic() { }
 
     public Topic(Long id, String name) {
         this.id = id;
@@ -37,4 +37,11 @@ public class Topic {
         return name;
     }
 
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
+
+    public List<Article> getArticles() {
+        return articles;
+    }
 }

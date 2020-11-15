@@ -10,25 +10,28 @@ import java.util.List;
 
 @RestController
 public class ArticleController {
-    // Use @Autowired annotation to inject dependency
-    @Autowired
     private ArticleService articleService;
 
-    @GetMapping("/articles")
-    public List<Article> getAll(@RequestParam(required = false) Long topicId) {
-        if (topicId == null) {
-            return articleService.getAll();
-        } else {
-            return articleService.getAllByTopicId(topicId);
-        }
-
+    // Use @Autowired annotation to inject dependency
+    public ArticleController(@Autowired ArticleService articleService) {
+        this.articleService = articleService;
     }
+
+    @GetMapping("/articles")
+    public List<Article> getAll() {
+            return articleService.getAll();
+        }
 
     // 200 or 404
     @GetMapping("/articles/{id}")
     public Article getById(@PathVariable Long id) {
         return articleService.getById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+   @GetMapping("/articles?topicId={topicId}")
+    public List<Article> getAllByTopicId(Long topicId) {
+        return articleService.getAllByTopicId(topicId);
     }
 
     // Create a new article
@@ -38,8 +41,8 @@ public class ArticleController {
     }
 
     @PutMapping("/articles")
-    public Article update(@RequestBody Article article) {
-        return articleService.update(article);
+    public Article update(@RequestBody Article updatedArticle) {
+        return articleService.update(updatedArticle);
     }
 
     @DeleteMapping("/articles/{id}")

@@ -1,6 +1,5 @@
-package sda.demo.articles;
+package sda.springnews.articles;
 
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import sda.springnews.articles.Article;
-import sda.springnews.articles.ArticleService;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ArticleRestTests {
@@ -73,7 +70,7 @@ public class ArticleRestTests {
         Assertions.assertEquals(updatedArticle.getTitle(), getByIdArticleResponse.getTitle());
         Assertions.assertEquals(updatedArticle.getBody(), getByIdArticleResponse.getBody());
     }
-    
+
     // Helper method
     private Article putForArticle(Article requestBody) {
         HttpEntity<Article> requestEntity = new HttpEntity<>(requestBody);

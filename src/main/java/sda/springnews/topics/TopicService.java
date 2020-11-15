@@ -1,12 +1,12 @@
 package sda.springnews.topics;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import sda.springnews.articles.Article;
-import sda.springnews.articles.ArticleRepo;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class TopicService {
     @Autowired
     private TopicRepo repo;
@@ -16,7 +16,7 @@ public class TopicService {
     }
 
     public List<Topic> getAllByArticleId(Long articleId) {
-      return repo.findAllByArticleId(articleId);
+      return repo.findAllByArticles_id(articleId);
     }
 
     // Use Optional in case the id doesn't exist

@@ -7,5 +7,6 @@ import java.util.List;
 
 @Repository
 public interface ArticleRepo extends JpaRepository<Article, Long> {
-    List<Article> findAllByTopicId(Long topicId);
+    List<Article> findAllByTopics_id(Long topicId);
+
 }

@@ -8,15 +8,18 @@ import java.util.List;
 @RestController
 public class CommentController {
 
-    @Autowired
     private CommentService commentService;
+
+    public CommentController(@Autowired CommentService commentService) {
+        this.commentService = commentService;
+    }
 
     @GetMapping("/comments")
     public List<Comment> getAll(){
         return commentService.getAll();
     }
 
-    @GetMapping("/comments/articleId={articleId}")
+    @GetMapping("/comments?articleId={articleId}")
     public List<Comment> getAllByArticleId(@PathVariable Long articleId) {
         return commentService.getAllByArticleId(articleId);
     }
@@ -27,10 +30,11 @@ public class CommentController {
     }
 
     @PutMapping("/comments")
-    public Comment update(@RequestBody Comment comment) {
-        return commentService.update(comment);
+    public Comment update(@RequestBody Comment updatedComment) {
+        return commentService.update(updatedComment);
     }
 
+    @DeleteMapping("/comments")
     public void delete(@RequestBody Long id) {
         commentService.delete(id);
     }

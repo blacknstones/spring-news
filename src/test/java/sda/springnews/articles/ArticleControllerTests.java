@@ -1,4 +1,4 @@
-package sda.demo.articles;
+package sda.springnews.articles;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -6,9 +6,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import sda.springnews.articles.Article;
-import sda.springnews.articles.ArticleController;
-import sda.springnews.articles.ArticleService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +46,7 @@ public class ArticleControllerTests {
         Assertions.assertEquals(article2.getTitle(), controllerArticle2.getTitle());
     }
 
-    @Test
+    /*@Test
     public void testGetAll() {
         //Arrange
         Article article1 = new Article(1L, "title1", "body1", "author1");
@@ -71,3 +68,4 @@ public class ArticleControllerTests {
 
     }
 }
+*/
