@@ -20,13 +20,12 @@ import java.util.List;
         }
 
         @GetMapping("/topics")
-        public List<Topic> getAll() {
-            return topicService.getAll();
-        }
-
-        @GetMapping("/topics?articleId={articleId}")
-        public List<Topic> getAllByArticleId(Long articleId) {
-            return topicService.getAllByArticleId(articleId);
+        public List<Topic> getAll(@RequestParam (required = false) Long articleId) {
+            if (articleId == null) {
+                return topicService.getAll();
+            } else {
+                return topicService.getAllByArticleId(articleId);
+            }
         }
 
         // Create a new topic
@@ -41,7 +40,7 @@ import java.util.List;
         }
 
         @DeleteMapping("/topics/{id}")
-        public void delete(@RequestBody Long id) {
+        public void delete(@PathVariable Long id) {
             topicService.delete(id);
         }
 

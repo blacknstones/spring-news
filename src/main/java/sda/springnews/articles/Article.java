@@ -69,7 +69,7 @@ public class Article {
         return authorName;
     }
 
-    public void setComments(List<Comment> comments) {
+   /* public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 
@@ -83,5 +83,5 @@ public class Article {
 
     public List<Topic> getTopics() {
         return topics;
-    }
+    }*/
 }

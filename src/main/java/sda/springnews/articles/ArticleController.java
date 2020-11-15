@@ -18,20 +18,19 @@ public class ArticleController {
     }
 
     @GetMapping("/articles")
-    public List<Article> getAll() {
+    public List<Article> getAll(@RequestParam(required = false) Long topicId) {
+        if (topicId == null) {
             return articleService.getAll();
+        } else {
+            return articleService.getAllByTopicId(topicId);
         }
+    }
 
     // 200 or 404
     @GetMapping("/articles/{id}")
     public Article getById(@PathVariable Long id) {
         return articleService.getById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
-
-   @GetMapping("/articles?topicId={topicId}")
-    public List<Article> getAllByTopicId(Long topicId) {
-        return articleService.getAllByTopicId(topicId);
     }
 
     // Create a new article

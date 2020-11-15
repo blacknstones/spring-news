@@ -15,13 +15,12 @@ public class CommentController {
     }
 
     @GetMapping("/comments")
-    public List<Comment> getAll(){
-        return commentService.getAll();
-    }
-
-    @GetMapping("/comments?articleId={articleId}")
-    public List<Comment> getAllByArticleId(@PathVariable Long articleId) {
-        return commentService.getAllByArticleId(articleId);
+    public List<Comment> getAll(@RequestParam (required = false) Long articleId){
+        if (articleId == null) {
+            return commentService.getAll();
+        } else {
+            return commentService.getAllByArticleId(articleId);
+        }
     }
 
     @PostMapping("/comments")
@@ -34,8 +33,8 @@ public class CommentController {
         return commentService.update(updatedComment);
     }
 
-    @DeleteMapping("/comments")
-    public void delete(@RequestBody Long id) {
+    @DeleteMapping("/comments/{id}")
+    public void delete(@PathVariable Long id) {
         commentService.delete(id);
     }
 }
